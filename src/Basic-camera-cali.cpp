@@ -63,7 +63,7 @@ int main(int argc, char** argv) {
 		EnsureDirHasTrailingBackslash(source_dir);
 		EnsureDirHasTrailingBackslash(write_dir);
 
-		cali_object_file =  string(argv[1]) + "calibration_object.txt";
+		cali_object_file =  string(source_dir) + "calibration_object.txt";
 
 	}	else {
 		cout << "Wrong number of arguments " << endl;
