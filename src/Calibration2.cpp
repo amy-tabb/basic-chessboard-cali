@@ -11,7 +11,7 @@
 
 using namespace cv;
 
-CaliObjectOpenCV2::CaliObjectOpenCV2(int i, int w, int h,  double s_w_i, double s_h_i){
+CaliObjectOpenCV2::CaliObjectOpenCV2( int w, int h,  double s_w_i, double s_h_i){
 
 	chess_w = w;
 	chess_h = h;
@@ -32,9 +32,6 @@ void CaliObjectOpenCV2::ReadImages(string internal_dir, bool flag){
 	vector<string> im_names;
 	string filename;
 	string txt_ext = "txt";
-
-	int count;
-
 
 	im_names.clear();
 
@@ -67,7 +64,7 @@ bool CaliObjectOpenCV2::AccumulateCorners(bool draw_corners){
 	bool corner_found;
 	bool some_found = false;
 	string filename;
-	char ch;
+
 	int corner_count = chess_h*chess_w;
 
 	vector<cv::Point2f> pointBuf;
@@ -228,7 +225,7 @@ bool CaliObjectOpenCV2::AccumulateCornersFlexibleExternal(bool draw_corners){
 	bool corner_found;
 	bool some_found = false;
 	string filename;
-	char ch;
+
 	int corner_count = chess_h*chess_w;
 
 	vector<cv::Point2f> pointBuf;
@@ -632,18 +629,14 @@ void CaliObjectOpenCV2::CalibrateFlexibleExternal(std::ofstream& out, string wri
 
 	vector<cv::Mat> rvecs, tvecs;
 
-	if (image_size.width > 640){
-		cameraMatrix.at<double>(0, 0) = 2500;
-		cameraMatrix.at<double>(1, 1) = 2500;
-	}	else {
-		cameraMatrix.at<double>(0, 0) = 1800;
-		cameraMatrix.at<double>(1, 1) = 1800;
-		cameraMatrix.at<double>(0, 0) = 1000;
-		cameraMatrix.at<double>(1, 1) = 1000;
+	double max_dim = image_size.width;
+	max_dim < image_size.height ? max_dim = image_size.height : 0;
 
-		cameraMatrix.at<double>(0, 0) = 600;
-		cameraMatrix.at<double>(1, 1) = 600;
-	}
+	double focal_length_px = max_dim*1.2;
+
+	cameraMatrix.at<double>(0, 0) = focal_length_px;
+	cameraMatrix.at<double>(1, 1) = focal_length_px;
+
 	cameraMatrix.at<double>(0, 2) = image_size.width/2;
 	cameraMatrix.at<double>(1, 2) = image_size.height/2;
 
@@ -658,69 +651,11 @@ void CaliObjectOpenCV2::CalibrateFlexibleExternal(std::ofstream& out, string wri
 
 	cout << "Running calibration " << endl;
 	cout << "Number of dist coefficients  = " << distCoeffs.rows << endl;
-	//LevMarCameraCaliNoDistortion(all_points, all_3d_corners, out);
-	//double rms = cv::calibrateCamera(all_3d_corners, all_points, image_size, cameraMatrix, distCoeffs, rvecs, tvecs, CV_CALIB_USE_INTRINSIC_GUESS,
-	//		cv::TermCriteria( cv::TermCriteria::COUNT, 2, DBL_EPSILON) );  //, CV_CALIB_RATIONAL_MODEL );
-	//CV_CALIB_FIX_PRINCIPAL_POINT |
-	//double rms = cv::calibrateCamera(all_3d_corners, all_points, image_size, cameraMatrix, distCoeffs, rvecs, tvecs,
-	//		CV_CALIB_USE_INTRINSIC_GUESS| CV_CALIB_RATIONAL_MODEL);
 
-
-	// this one does not use the initial guess
-	//double rms = cv::calibrateCamera(all_3d_corners, all_points_wo_blanks, image_size, cameraMatrix, distCoeffs, rvecs, tvecs,
-	//		CV_CALIB_RATIONAL_MODEL);
 
 	double rms = 0;
-	char ch;
-	//	cout << "Before first " << endl; cin >> ch;
-	//	rms = cv::calibrateCamera(all_3d_corners, all_points_wo_blanks, image_size, cameraMatrix, distCoeffs, rvecs, tvecs,
-	//							CV_CALIB_RATIONAL_MODEL);
 
-
-	if (text_file.size() == 0){
-		// submitted Transactions paper has rational model
-		//rms = cv::calibrateCamera(all_3d_corners, all_points_wo_blanks, image_size, cameraMatrix, distCoeffs, rvecs, tvecs,
-		//		CV_CALIB_RATIONAL_MODEL);
-
-		rms = cv::calibrateCamera(all_3d_corners, all_points_wo_blanks, image_size, cameraMatrix, distCoeffs, rvecs, tvecs);
-
-	}	else {
-		ifstream in(text_file.c_str());
-		string temp;
-		in >> cameraMatrix.at<double>(0, 0);
-		in >> temp;
-		in >> cameraMatrix.at<double>(0, 2);
-		in >> temp;
-		in >> cameraMatrix.at<double>(1, 1);
-		in >> cameraMatrix.at<double>(1, 2);
-		in >> temp >> temp >> temp;
-		in.close();
-
-		cout << "initial camera matrix " << endl;
-
-		for (int i = 0; i < 3; i++){
-			for (int j = 0; j < 3; j++){
-				cout << cameraMatrix.at<double>(i, j) << " ";
-			}
-			cout << endl;
-		}
-
-		//		cout << "Before first " << endl; cin >> ch;
-		//		rms = cv::calibrateCamera(all_3d_corners, all_points_wo_blanks, image_size, cameraMatrix, distCoeffs, rvecs, tvecs,
-		//						CV_CALIB_RATIONAL_MODEL);
-
-		//cout << "Before second " << endl; cin >> ch;
-		// submitted Transactions paper has rational model
-		//rms = cv::calibrateCamera(all_3d_corners, all_points_wo_blanks, image_size, cameraMatrix, distCoeffs, rvecs, tvecs,
-		//		CV_CALIB_RATIONAL_MODEL| CV_CALIB_USE_INTRINSIC_GUESS);
-
-		//	rms = cv::calibrateCamera(all_3d_corners, all_points_wo_blanks, image_size, cameraMatrix, distCoeffs, rvecs, tvecs,
-		//					CV_CALIB_USE_INTRINSIC_GUESS);
-		// OpenCV versions
-		rms = cv::calibrateCamera(all_3d_corners, all_points_wo_blanks, image_size, cameraMatrix, distCoeffs, rvecs, tvecs,
-				CALIB_USE_INTRINSIC_GUESS);
-	}
-
+	rms = cv::calibrateCamera(all_3d_corners, all_points_wo_blanks, image_size, cameraMatrix, distCoeffs, rvecs, tvecs);
 
 	cout << "rms " << rms << endl;
 	cout << "camera matrix " << endl;

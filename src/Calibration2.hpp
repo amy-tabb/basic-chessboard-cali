@@ -11,19 +11,6 @@
 #include "Includes.hpp"
 #include "DirectoryFunctions.hpp"
 
-#include <opencv2/core/core.hpp>
-#include <opencv2/core/mat.hpp>
-#include <opencv2/highgui/highgui.hpp>
-#include <opencv2/highgui/highgui_c.h>
-#include <opencv2/imgproc/imgproc.hpp>
-#include <opencv2/calib3d/calib3d.hpp>
-
-
-#include <Eigen/Dense>
-#include <Eigen/Eigenvalues>
-
-using namespace Eigen;
-
 #include <math.h>
 #include <cstdlib>
 #include <iostream>
@@ -66,7 +53,7 @@ public:
 
 	string text_file;
 
-	CaliObjectOpenCV2(int i, int w, int h, double s_w_i, double s_h_i);
+	CaliObjectOpenCV2( int w, int h, double s_w_i, double s_h_i);
 
 	void ReadImages(string internal_dir, bool flag);
 

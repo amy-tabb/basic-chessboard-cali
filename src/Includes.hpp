@@ -38,7 +38,7 @@
 
 
 using namespace Eigen;
-using namespace cv;
+
 using std::vector;
 using std::ifstream;
 using std::string;
