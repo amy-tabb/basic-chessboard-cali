@@ -16,7 +16,7 @@ This repository is a companion to a webinar on camera calibration presented on [
 
 ## Dependencies
 
-The current version depends on these versions of [OpenCV](http://opencv.org/) and Eigen(http://eigen.tuxfamily.org/index.php?title=Main_Page).  The version of Eigen is probably not critical.
+The current version depends on these versions of [OpenCV](http://opencv.org/) and [Eigen](http://eigen.tuxfamily.org/index.php?title=Main_Page).  The version of Eigen is probably not critical.
 
 OpenCV 4.0 (OpenCV 3.0 may work with changes of some enums - read below)  OpenCV 4.0 requires a [C++11-compliant compiler](https://opencv.org/opencv-4-0-0.html), FYI.
 
