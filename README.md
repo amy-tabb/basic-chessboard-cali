@@ -61,8 +61,7 @@ It will take some time (on the order of 4 minutes) to perform camera calibration
 
 ## Required structure of the input directory
 
-An example input and output directory, where the results in the output directory were produced from this code, are included in a companion repository [amy-tabb/chessboard-cali-testset1
-](https://github.com/amy-tabb/chessboard-cali-testset1), with the names `input_dir` and `output_dir` within the `TestSet` folder.   
+An example input and output directory, where the results in the output directory were produced from this code, are included in a [Google Drive link (~700MB)](https://drive.google.com/open?id=1_luPe6Cr2pXQBDIyXvIQK89kBRRv0L1L), with the names `input_dir` and `output_dir` within the `TestSet` folder.   
 
 `input_directory` should have two items:
 
