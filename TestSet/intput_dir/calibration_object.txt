@@ -1,4 +1,0 @@
-chess_mm_height 26.0
-chess_mm_width 26.0
-chess_height 10
-chess_width 14

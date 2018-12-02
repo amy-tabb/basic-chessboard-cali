@@ -2,7 +2,7 @@
 
 Author: Amy Tabb.  Questions/comments/problems: amy.tabb@ars.usda.gov
 
-28 November 2018
+28 November 2018, last update 2 December 2018
 
 This repository is a companion to a webinar on camera calibration presented on [Plantae](https://plantae.org/), however viewing the webinar is not necessary to use and understand this code.  This code is a cleaned-up version of the camera calibration portion of another repository of mine, for [robot-world, hand-eye calibration](https://github.com/amy-tabb/RWHEC-Tabb-AhmadYousef).   
 
@@ -61,7 +61,8 @@ It will take some time (on the order of 4 minutes) to perform camera calibration
 
 ## Required structure of the input directory
 
-An example input and output directory, where the results in the output directory were produced from this code, are included in this repository (in `TestSet`), with the names `input_dir` and `output_dir`.   
+An example input and output directory, where the results in the output directory were produced from this code, are included in a companion repository [amy-tabb/chessboard-cali-testset1
+](https://github.com/amy-tabb/chessboard-cali-testset1), with the names `input_dir` and `output_dir` within the `TestSet` folder.   
 
 `input_directory` should have two items:
 
